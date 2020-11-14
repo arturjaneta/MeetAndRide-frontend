@@ -1,0 +1,15 @@
+.column-title {
+  width: 60%;
+}
+
+.column-fromDate {
+  width: 10%;
+}
+
+.column-toDate {
+    width: 10%;
+}
+
+.column-fromPlace {
+    width: 10%;
+  }
