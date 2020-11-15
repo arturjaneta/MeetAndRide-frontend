@@ -5,6 +5,7 @@ import PeoplePage from "../../pages/PeoplePage/PeoplePage";
 import FindTripPage from "../../pages/FindTripPage/FindTripPage"
 import MyTripsPage from "../../pages/MyTripsPage/MyTripsPage"
 import TripDetailsPage from "../../pages/TripDetailsPage/TripDetailsPage";
+import AddTripPage from "../../pages/AddTripPage/AddTripPage";
 
 
 
@@ -24,6 +25,9 @@ const Routes = () => {
         <Account></Account>
       </Route>
       <Route path="/details/:id" component={TripDetailsPage}>
+      </Route>
+      <Route path="/add" >
+        <AddTripPage></AddTripPage>
       </Route>
     </Switch>
   );
