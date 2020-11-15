@@ -4,6 +4,7 @@ import Account from "../../pages/Account/Account";
 import PeoplePage from "../../pages/PeoplePage/PeoplePage";
 import FindTripPage from "../../pages/FindTripPage/FindTripPage"
 import MyTripsPage from "../../pages/MyTripsPage/MyTripsPage"
+import TripDetailsPage from "../../pages/TripDetailsPage/TripDetailsPage";
 
 
 
@@ -21,6 +22,8 @@ const Routes = () => {
       </Route>
       <Route path="/account">
         <Account></Account>
+      </Route>
+      <Route path="/details/:id" component={TripDetailsPage}>
       </Route>
     </Switch>
   );

@@ -5,6 +5,7 @@ import FindTripTableHeader from "./FindTripTableHeader";
 import FindTripTableRow from "./FindTripTableRow";
 import "moment/locale/pl";
 
+
 const headers = {
   title: { label: "Title" },
   fromDate: { label: "Begin date" },
