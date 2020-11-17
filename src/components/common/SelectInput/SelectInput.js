@@ -8,6 +8,7 @@ const SelectInput = (props) => {
       isMulti={props.isMulti}
       defaultValue={props.defaultValue}
       options={props.options}
+      isClearable={props.isClearable}
       getOptionLabel={props.getOptionLabel}
       getOptionValue={props.getOptionValue}
       onChange={props.onChange}

@@ -3,44 +3,25 @@ import Page from "../../components/Page/Page";
 import PeopleTable from "../../components/People/PeopleTable";
 import * as AxiosService from "../../components/common/AxiosService";
 
+
+const people = [
+{id:"1",firstName:"Admin",lastName:"admin",email:"a@a.pl",isActive:true,isAdmin:true},
+{id:"2",firstName:"user1",lastName:"asda",email:"dasda@dsf.pl",isActive:true,isAdmin:false},
+{id:"3",firstName:"user2",lastName:"admasdin",email:"sdfsd@sdf.pl",isActive:false,isAdmin:false},
+{id:"4",firstName:"user3",lastName:"admasdain",email:"sfad@dsf.pl",isActive:true,isAdmin:false},
+]
+
 const PeoplePage = () => {
-  const [users, setUsers] = useState([]);
-  const [projects, setProjects] = useState([]);
-
-  useEffect(() => {
-    AxiosService.getProjects(loadProjectsData);
-  }, []);
-
-  const loadUsersData = (data) => {
-    setUsers(data);
-  };
-
-  const loadProjectsData = (data) => {
-    setProjects(data);
-    AxiosService.getUsers(loadUsersData);
-  };
-
-  const handleUserEdit = (user, userName, projects, isActive) => {
-    const newUser = {
-      id: user.id,
-      name: userName,
-      projectIds: projects?.map((p) => p.id),
-      active: isActive,
-    };
-    const newUsers = users.map((u) => (u === user ? newUser : u));
-    setUsers(newUsers);
-  };
+  const [users, setUsers] = useState(people);
 
   const handleSave = () => {
-    AxiosService.setUsers(users);
+    console.log(users)
   };
 
   return (
     <Page title="Users">
       <PeopleTable
         users={users}
-        onUserEdit={handleUserEdit}
-        projects={projects}
       />
       <button
         className="button is-pulled-right is-link mt-4"

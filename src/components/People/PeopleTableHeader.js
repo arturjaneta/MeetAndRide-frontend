@@ -5,9 +5,9 @@ import "./PeopleTableHeader.style.css";
 const PeopleTableHeader = ({ headers }) => {
   return (
     <tr className="is-capitalized">
-      <th className="column-email">{headers.email.label}</th>
       <th className="column-firstName">{headers.firstName.label}</th>
       <th className="column-lastName">{headers.lastName.label}</th>
+      <th className="column-email">{headers.email.label}</th>
       <th className="column-actions">{headers.actions.label}</th>
     </tr>
   );

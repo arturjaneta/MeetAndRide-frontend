@@ -2,117 +2,83 @@ import React, { useState, useEffect } from "react";
 
 import Switch from "../../common/Switch/Switch";
 import SelectInput from "../../common/SelectInput/SelectInput";
-import PropTypes from "prop-types";
 
-const initProjects = (user, projects) => {
-  return user?.projectIds.map((projectID) => {
-    return projects.find((p) => p.id === projectID);
-  });
-};
 
-const PeopleTableRow = ({ user, onUserEdit, projects }) => {
-  const [userName, setUserName] = useState(user?.name);
-  const [selectedProjects, setSelectedProjects] = useState(
-    user ? initProjects(user, projects) : []
-  );
-  const [isActive, setIsActive] = useState(user?.active);
-  const [isInputHovered, setIsInputHovered] = useState(false);
+const PeopleTableRow = ({user}) => {
+  const [userFirstName, setUserFirstName] = useState(user?.firstName);
+  const [userLastName, setUserLastName] = useState(user?.lastName);
 
-  useEffect(() => {
-    if (user) {
-      setUserName(user.name);
-    }
-  }, [user]);
-
-  const handleMultiSelectOnChange = (selected) => {
-    setSelectedProjects(selected);
+  const handleUserFirstNameChange = (event) => {
+    user.firstName = event.target.value
+    setUserFirstName(event.target.value)
   };
 
-  const handleUserNameChange = (event) => {
-    setUserName(event.target.value);
+  const handleUserLastNameChange = (event) => {
+    user.lastName = event.target.value
+    setUserLastName(event.target.value)
   };
 
   const handleIsActiveChange = (event) => {
-    setIsActive(!isActive);
+    if(event.target.value==="on")
+        user.isActive = true
+    else
+        user.isActive = false
   };
 
-  const handleBlur = () => {
-    onUserEdit(
-      user,
-      userName,
-      selectedProjects ? selectedProjects : [],
-      isActive
-    );
+  const handleIsAdminChange = (event) => {
+    if(event.target.value==="on")
+        user.isAdmin = true
+    else
+        user.isAdmin = false
   };
 
   return (
-    <tr onBlur={handleBlur}>
-      <td
-        onMouseEnter={() => {
-          setIsInputHovered(true);
-        }}
-        onMouseLeave={() => {
-          setIsInputHovered(false);
-          onUserEdit(
-            user,
-            userName,
-            selectedProjects ? selectedProjects : [],
-            isActive
-          );
-        }}
-        className="is-vcentered"
-      >
-        {isInputHovered ? (
-          <input
+    <tr>
+      <td className="is-vcentered">
+      <input
             type="text"
             className="input text-input"
-            value={userName}
-            onChange={handleUserNameChange}
+            value={userFirstName}
+            onChange={handleUserFirstNameChange}
           />
-        ) : (
-          <p>{userName}</p>
-        )}
       </td>
       <td className="is-vcentered">
-        <SelectInput
-          defaultValue={selectedProjects}
-          options={projects}
-          getOptionLabel={(option) => `${option.name}`}
-          getOptionValue={(option) => option["id"]}
-          onChange={(selected) => {
-            handleMultiSelectOnChange(selected);
-          }}
-        />
+      <input
+            type="text"
+            className="input text-input"
+            value={userLastName}
+            onChange={handleUserLastNameChange}
+          />
       </td>
-      <td className="is-vcentered has-text-right">
-        <label className="checkbox">
+      <td className="is-vcentered">
+        <p>{user.email}</p>
+      </td>
+      <td className="is-vcentered">
+        <div className="level mt-1 mb-1">
+          <span className="mr-2">
+          Active:
+          </span>
           {user ? (
             <Switch
-              defaultChecked={user.active}
+              defaultChecked={user.isActive}
               onChange={handleIsActiveChange}
             />
           ) : null}
-        </label>
+        </div>
+        <div className="level mt-1 mb-1">
+          <span className="mr-2">
+          Is Admin:
+          </span>
+          {user ? (
+            <Switch
+              defaultChecked={user.isAdmin}
+              onChange={handleIsAdminChange}
+            />
+          ) : null}
+        </div>
       </td>
     </tr>
   );
-};
-
-PeopleTableRow.propTypes = {
-  projects: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-    })
-  ),
-  user: PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    isActive: PropTypes.bool,
-    projectIds: PropTypes.arrayOf(PropTypes.number),
-  }),
-  onUserAdd: PropTypes.func,
-  onUserEdit: PropTypes.func,
 };
 
 export default PeopleTableRow;

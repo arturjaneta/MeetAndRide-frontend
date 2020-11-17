@@ -72,6 +72,7 @@ const FilterBar = ({date,
           </div>
           <SelectInput
           defaultValue={selectedDate}
+          isClearable
           options={date}
           getOptionLabel={(option) => `${option.label}`}
           getOptionValue={(option) => option["id"]}
@@ -87,6 +88,7 @@ const FilterBar = ({date,
           {position ? 
           <SelectInput
           defaultValue={selectedLocation}
+          isClearable
           options={location}
           getOptionLabel={(option) => `${option.label}`}
           getOptionValue={(option) => option["id"]}

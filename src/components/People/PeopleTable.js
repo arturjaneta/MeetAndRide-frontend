@@ -11,7 +11,7 @@ const headers = {
   actions: { label: "Actions" },
 };
 
-const PeopleTable = ({ users, onUserEdit, projects }) => {
+const PeopleTable = ({users}) => {
   return (
     <Table
       header={<PeopleTableHeader headers={headers} />}
@@ -20,32 +20,11 @@ const PeopleTable = ({ users, onUserEdit, projects }) => {
           <PeopleTableRow
             key={user.id}
             user={user}
-            onUserEdit={onUserEdit}
-            projects={projects}
           />
         )),
       ]}
     />
   );
-};
-
-PeopleTable.propTypes = {
-  projects: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-    })
-  ),
-  users: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-      isActive: PropTypes.bool,
-      projectIds: PropTypes.arrayOf(PropTypes.number),
-    })
-  ),
-  onUserAdd: PropTypes.func,
-  onUserEdit: PropTypes.func,
 };
 
 export default PeopleTable;

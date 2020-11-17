@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const Switch = (props) => {
     return (
-        <label className="switch">
+        <label className="switch mt-1">
             <input type="checkbox" defaultChecked={props.defaultChecked} onChange={props.onChange} />
             <span className="slider round"></span>
         </label>
