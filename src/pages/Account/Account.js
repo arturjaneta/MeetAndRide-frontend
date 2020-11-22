@@ -10,12 +10,31 @@ import * as services from '../../components/common/AxiosService';
 import * as authService from '../../components/Auth/AuthService';
 
 import * as config from './Account.config';
+import MotorcyclesTable from "../../components/Motorcycles/MotorcyclesTable"
+import AddMotorcycle from "../../components/Motorcycles/AddMotorcycle"
+import AddTripPage from '../AddTripPage/AddTripPage';
+import Table from "../../components/Table/Table";
 
 function Account() {
     
     const [userInitialData, setUserInitialData] = useState({name: '', surname: '', email:'',});
     const [emailConflictFlag, setEmailConflictFlag] = useState(false);
     const [conflictedEmail, setConflictedEmail] = useState("");
+    const [motorcycles, setMotorcycles] = useState([])
+
+    const [brandName,setBrandName] = useState("")
+    const [modelName,setModelName] = useState("")
+    const [Power,setPower] = useState("")
+    const [Capacity,setCapacity] = useState("")
+    const [registrationNumber,setRegistrationNumber] = useState("")
+
+    const handleAddMotorcycle = () => {
+        console.log(brandName)
+        console.log(modelName)
+        console.log(Power)
+        console.log(Capacity)
+        console.log(registrationNumber)
+    }
 
     // Getting current user name and email from API on component mount:
     useEffect(() => {
@@ -95,7 +114,7 @@ function Account() {
                 </div>
 
                 {/*  User e-mail  */}
-                <div className='field is-horizontal'>
+                {/* <div className='field is-horizontal'>
                     <div className='field-label'>
                         <label htmlFor='email' className='label has-text-right'>E-mail</label>
                     </div>
@@ -115,7 +134,7 @@ function Account() {
                             </p>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 {/*  Save button  */}
                 <div className='field'>
@@ -190,6 +209,36 @@ function Account() {
                     </div>
                 </div>
             </form>
+
+            <h1 className="title is-2 is-capitalized has-text-weight-bold mt-6">
+                Your motorcycles
+            </h1>
+            
+            <MotorcyclesTable
+            motorcycles={motorcycles}
+            />
+
+            <h1 className="title is-4 is-capitalized has-text-weight-bold mt-5">
+                Add motorcycle
+            </h1>
+
+            <Table
+      header={<AddMotorcycle
+        setBrand={setBrandName}
+        setModel={setModelName}
+        setPwr={setPower}
+        setCapacit={setCapacity}
+        setRegistration={setRegistrationNumber}
+        />}
+        body={[]}
+        />
+            <button
+        className="button is-pulled-right is-link mt-4"
+        onClick={handleAddMotorcycle}
+      >
+        Add
+      </button>
+
         </Page>
     );
 }
