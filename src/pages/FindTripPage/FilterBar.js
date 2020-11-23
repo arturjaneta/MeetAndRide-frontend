@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import {MapContainer,TileLayer,Marker,Popup,useMapEvents,Circle,LayerGroup} from "react-leaflet"
+// import {MapContainer,TileLayer,Marker,Popup,useMapEvents,Circle,LayerGroup} from "react-leaflet"
 import SelectInput from "../../components/common/SelectInput/SelectInput";
 import "./FilterBar.css";
 
-const LocationMarker = ({setBounds,position,setPosition}) =>  {
-  const map = useMapEvents({
-    click(e) {
-      var latlng = map.mouseEventToLatLng(e.originalEvent)
-      console.log(latlng.lat + ', ' + latlng.lng);
-      setBounds(latlng)
-      setPosition(latlng)
-      map.flyTo(latlng, map.getZoom())
-    },
-    locationfound(e) {
-      setPosition(e.latlng)
-      map.flyTo(e.latlng, map.getZoom())
-    },
-  })
-  if(!position)
-    map.locate()
+// const LocationMarker = ({setBounds,position,setPosition}) =>  {
+//   const map = useMapEvents({
+//     click(e) {
+//       var latlng = map.mouseEventToLatLng(e.originalEvent)
+//       console.log(latlng.lat + ', ' + latlng.lng);
+//       setBounds(latlng)
+//       setPosition(latlng)
+//       map.flyTo(latlng, map.getZoom())
+//     },
+//     locationfound(e) {
+//       setPosition(e.latlng)
+//       map.flyTo(e.latlng, map.getZoom())
+//     },
+//   })
+//   if(!position)
+//     map.locate()
   
-  return position === null ? null : (
-    <Marker position={position}>
-      <Popup>You are here</Popup>
-    </Marker>
-  )
-}
+//   return position === null ? null : (
+//     <Marker position={position}>
+//       <Popup>You are here</Popup>
+//     </Marker>
+//   )
+// }
 
 const FilterBar = ({date,
   location,
@@ -46,7 +46,7 @@ const FilterBar = ({date,
 
   return (
     <>
-    <MapContainer
+    {/* <MapContainer
     center={bounds}
     zoom={13}
     scrollWheelZoom={false}>
@@ -64,7 +64,7 @@ const FilterBar = ({date,
     position={position}
     setPosition={setPosition}
     />
-  </MapContainer>
+  </MapContainer> */}
       <div className="columns">
         <div className="column is-one-quarter">
           <div className="mb-3 mt-5">
