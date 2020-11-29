@@ -17,9 +17,10 @@ class Routing extends MapLayer {
           }
         ]
       },
-    routeWhileDragging: true,
-    autoRoute: true,
-    geocoder: new L.Control.Geocoder.nominatim(),
+    addWaypoints: false,
+    draggableWaypoints: false,
+    fitSelectedRoutes: false,
+    showAlternatives: false,
     }).addTo(map.leafletElement);
     leafletElement.waypointschanged = this.props.setWaypoints
     routers.push(leafletElement)

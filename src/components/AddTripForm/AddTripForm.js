@@ -5,14 +5,16 @@ import moment from "moment";
 
 const speedOptions = [{id:1,label:"125ccm"},{id:2,label:"Recreation"},{id:3,label:"Turistic"},{id:4,label:"Turistic +"},{id:5,label:"Dynamic"}]
 
-const AddTripForm = ({trip}) => {
-        const [title,setTitle] = useState("");
-        const [description,setDescription] = useState("");
-        const [beginDate,setBeginDate] = useState(moment());
-        const [finishDate,setFinishDate] = useState(moment());
-        const [from,setFrom] = useState("");
-        const [to,setTo] = useState("");
-        const [speed,setSpeed] = useState([]);
+
+
+const AddTripForm = ({trip,routers}) => {
+        const [title,setTitle] = useState(trip?trip.title:"");
+        const [description,setDescription] = useState(trip?trip.description:"");
+        const [beginDate,setBeginDate] = useState(trip?moment(trip.fromDate):moment());
+        const [finishDate,setFinishDate] = useState(trip?moment(trip.toDate):moment());
+        const [from,setFrom] = useState(trip?trip.fromPlace:"");
+        const [to,setTo] = useState(trip?trip.toPlace:"");
+        const [speed,setSpeed] = useState(trip?trip.speed:[]);
 
         const handleTitleChange = (event) => {
             setTitle(event.target.value)
@@ -32,6 +34,7 @@ const AddTripForm = ({trip}) => {
 
         const handleAddTrip = () => {
             console.log("add")
+            console.log(routers[1]?.getWaypoints())
             console.log(description)
         }
 

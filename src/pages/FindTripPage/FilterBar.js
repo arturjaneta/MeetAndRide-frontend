@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 // import {MapContainer,TileLayer,Marker,Popup,useMapEvents,Circle,LayerGroup} from "react-leaflet"
 import SelectInput from "../../components/common/SelectInput/SelectInput";
 import "./FilterBar.css";
+import LeafletMap from "./LeafletMap"
 
 // const LocationMarker = ({setBounds,position,setPosition}) =>  {
 //   const map = useMapEvents({
@@ -65,6 +66,7 @@ const FilterBar = ({date,
     setPosition={setPosition}
     />
   </MapContainer> */}
+  <LeafletMap position={position} setPosition={setPosition} selectedLocation={selectedLocation}/>
       <div className="columns">
         <div className="column is-one-quarter">
           <div className="mb-3 mt-5">
