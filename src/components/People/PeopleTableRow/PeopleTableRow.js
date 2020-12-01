@@ -19,17 +19,17 @@ const PeopleTableRow = ({user}) => {
   };
 
   const handleIsActiveChange = (event) => {
-    if(event.target.value==="on")
-        user.isActive = true
+    if(user.active)
+        user.active = false
     else
-        user.isActive = false
+        user.active = true
   };
 
   const handleIsAdminChange = (event) => {
-    if(event.target.value==="on")
-        user.isAdmin = true
+    if(user.admin)
+        user.admin = false
     else
-        user.isAdmin = false
+        user.admin = true
   };
 
   return (
@@ -60,7 +60,7 @@ const PeopleTableRow = ({user}) => {
           </span>
           {user ? (
             <Switch
-              defaultChecked={user.isActive}
+              defaultChecked={user.active}
               onChange={handleIsActiveChange}
             />
           ) : null}
@@ -71,7 +71,7 @@ const PeopleTableRow = ({user}) => {
           </span>
           {user ? (
             <Switch
-              defaultChecked={user.isAdmin}
+              defaultChecked={user.admin}
               onChange={handleIsAdminChange}
             />
           ) : null}

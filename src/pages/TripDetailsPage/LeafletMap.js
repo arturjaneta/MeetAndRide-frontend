@@ -14,9 +14,6 @@ const LeafletMap = ({waypoints,setWaypoints,routers}) => {
 
 
     const renderRouting = () => {
-        console.log("routing")
-        console.log(map)
-        console.log(routers)
         if(routers.length>1)
             routers[0]._container.style.display = "none"
         return(

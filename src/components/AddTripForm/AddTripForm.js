@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import SelectInput from "../common/SelectInput/SelectInput";
 import "./AddTripForm.css"
 import moment from "moment";
+import {addTrip} from "./AddTripService"
+import {useHistory} from 'react-router-dom';
 
-const speedOptions = [{id:1,label:"125ccm"},{id:2,label:"Recreation"},{id:3,label:"Turistic"},{id:4,label:"Turistic +"},{id:5,label:"Dynamic"}]
+const speedOptions = [{id:1,label:"SLOW"},{id:2,label:"NORMAL"},{id:3,label:"FAST"},{id:4,label:"VERY_FAST"},{id:5,label:"NO_LIMIT"}]
 
 
 
@@ -15,6 +17,10 @@ const AddTripForm = ({trip,routers}) => {
         const [from,setFrom] = useState(trip?trip.fromPlace:"");
         const [to,setTo] = useState(trip?trip.toPlace:"");
         const [speed,setSpeed] = useState(trip?trip.speed:[]);
+
+        const history = useHistory();
+
+        const handleOnClick = useCallback(() => history.push(`/mytrips`), [history]);
 
         const handleTitleChange = (event) => {
             setTitle(event.target.value)
@@ -33,7 +39,22 @@ const AddTripForm = ({trip,routers}) => {
         };
 
         const handleAddTrip = () => {
+
+            const body = {
+              title:title,
+              description:description,
+              fromDate:beginDate,
+              toDate:finishDate,
+              fromPlace:from,
+              toPlace:to,
+              waypoints:routers[1]?.getWaypoints().map(waypoint=>waypoint.latLng),
+              speed:speed.id
+            }
+          
+            addTrip(body).then(handleOnClick)
+
             console.log("add")
+            console.log(body)
             console.log(routers[1]?.getWaypoints())
             console.log(description)
         }

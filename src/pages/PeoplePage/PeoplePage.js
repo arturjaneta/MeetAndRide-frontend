@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Page from "../../components/Page/Page";
 import PeopleTable from "../../components/People/PeopleTable";
 import * as AxiosService from "../../components/common/AxiosService";
+import {getUsers,saveUsers} from "./PeoplePageService"
 
 
 const people = [
@@ -12,14 +13,21 @@ const people = [
 ]
 
 const PeoplePage = () => {
-  const [users, setUsers] = useState(people);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => { 
+    getUsers().then((data)=>setUsers(data))
+   },[]);
 
   const handleSave = () => {
+    saveUsers(users)
     console.log(users)
   };
 
   return (
     <Page title="Users">
+      {users?
+      <div>
       <PeopleTable
         users={users}
       />
@@ -28,7 +36,8 @@ const PeoplePage = () => {
         onClick={handleSave}
       >
         Save
-      </button>
+      </button></div>
+      :null}
     </Page>
   );
 };

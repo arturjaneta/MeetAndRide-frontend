@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {authenticationService} from './AuthService';
+import {authenticationService,register} from './AuthService';
 import SignInForm from "../SignInForm/SignInForm";
 import SignUpForm from "../SignUpForm/SignUpForm";
 
@@ -10,8 +10,8 @@ const AuthPage = ()=>{
         authenticationService.login(email, password)
     }
 
-    const handleSubmitSignUp = (email,password) => {
-        //TODO
+    const handleSubmitSignUp = (firstName,lastName,email,password) => {
+        register({firstName:firstName,lastName:lastName,email:email,password:password}).then(setMode('Sign_in'))
     }
 
     const onSignUp = () =>{

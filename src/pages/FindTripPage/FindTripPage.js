@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Page from "../../components/Page/Page";
 import FindTripTable from "../../components/FindTrip/FindTripTable";
-import {
-  getUsers,
-  getVacations,
-  getDaysOff,
-  getCurrentUser,
-  addVacation,
-  editVacation
-} from "../../services/FindTripService";
+import {getTrips} from "./FindTripService";
 import FilterBar from "./FilterBar";
 
 
@@ -24,11 +17,22 @@ const definedTrips = [
 ]
 
 const FindTripPage = () => {
-  const [trips, setTrips] = useState(definedTrips);
+  const [trips, setTrips] = useState([]);
   const [selectedDate, setSelectedDate] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState([]);
   const [selectedSpeed, setSelectedSpeed] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
+
+  useEffect(() => {   
+    const body = {
+      date:selectedDate,
+      range:selectedLocation,
+      speed:selectedSpeed,
+      tags:selectedTags
+    }
+    console.log(body)
+    getTrips("null","null","null","null").then(setTrips)
+ },[]);
 
   const handelDateSelect = (selected) => {
     setSelectedDate(selected)

@@ -1,7 +1,9 @@
 import { BehaviorSubject } from 'rxjs';
 import {signIn} from '../common/AxiosService'
+import axios from "axios";
 
 const currentUserSubject = new BehaviorSubject(localStorage.getItem('currentUser'));
+const url = `http://localhost:8080`;
 
 export const authenticationService = {
     login,
@@ -41,3 +43,9 @@ function setNewToken(token) {
     localStorage.setItem('currentUser', token);
     currentUserSubject.next(token);
 }
+
+export const register = async (body) => {
+    await axios.post(`${url}/user/register`, body)
+        .catch((error) => 
+        alert(error.response.data.msg))
+    };

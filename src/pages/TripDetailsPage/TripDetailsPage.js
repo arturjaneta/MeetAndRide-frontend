@@ -4,11 +4,17 @@ import LeafletMap from "./LeafletMap"
 import SelectInput from "../../components/common/SelectInput/SelectInput";
 import Page from "../../components/Page/Page";
 import TripDetalis from "../../components/TripDetails/TripDetails"
+import {getTrip} from "./TripDetailsService"
 
-const TripDetailsPage = ({id}) => {
+const TripDetailsPage = (props) => {
   const [waypoints, setWaypoints] = useState(null);
   const [trip,setTrip] = useState(null)
   const [routers,setRouters] = useState([])
+
+  useEffect(() => {   
+    console.log(props.match.params.id)
+    getTrip(props.match.params.id).then(setTrip)
+ },[]);
 
     return (
         <>

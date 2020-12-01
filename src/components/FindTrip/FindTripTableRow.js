@@ -17,10 +17,10 @@ const FindTripTableRow = ({
           <label>{trip.title}</label>
       </td>
       <td className="is-vcentered">
-          <label>{trip.fromDate}</label>
+          <label>{moment(trip.fromDate).format("YYYY-MM-DD HH:mm")}</label>
       </td>
       <td className="is-vcentered">
-          <label>{trip.toDate}</label>
+          <label>{moment(trip.toDate).format("YYYY-MM-DD HH:mm")}</label>
       </td>
       <td className="is-vcentered">
           <label> {trip.fromPlace}</label>

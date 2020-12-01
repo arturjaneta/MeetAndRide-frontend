@@ -6,6 +6,8 @@ const SignUpForm = ({ onSubmit, onReturn }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value)
@@ -19,13 +21,24 @@ const SignUpForm = ({ onSubmit, onReturn }) => {
         setConfirmPassword(event.target.value)
     }
 
+    const handleFirstNameChange = (event) => {
+        setFirstName(event.target.value)
+    }
+
+    const handleLastNameChange = (event) => {
+        setLastName(event.target.value)
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(password===confirmPassword)
-            onSubmit(email,password);
+        if(password===confirmPassword&&password.length!==0)
+            if(firstName.length===0||lastName.length===0){
+                alert("First name and last name cannot be empty!")
+            }else
+            onSubmit(firstName,lastName,email,password);
         else{
             //TODO
-            alert("Hasła nie są takie same")
+            alert("Passwords are not same or are empty")
             setPassword('')
             setConfirmPassword('')
         }
@@ -38,6 +51,24 @@ const SignUpForm = ({ onSubmit, onReturn }) => {
                     <img src={logo} className="image my-2" alt="meetandride logo"></img>
                     <div className="field">
                         <form onSubmit={handleSubmit}>
+                        <label className="label">First name</label>
+                            <div className="control">
+                                <input
+                                    value={firstName}
+                                    onChange={handleFirstNameChange}
+                                    type="text"
+                                    className="is-rounded input"
+                                />
+                            </div>
+                            <label className="label">Last name</label>
+                            <div className="control">
+                                <input
+                                    value={lastName}
+                                    onChange={handleLastNameChange}
+                                    type="text"
+                                    className="is-rounded input"
+                                />
+                            </div>
                             <label className="label">Email</label>
                             <div className="control">
                                 <input

@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import SelectInput from "../common/SelectInput/SelectInput";
 import moment from "moment";
 import ParticipantList from "./ParticipantList"
-
-const speedOptions = [{id:1,label:"125ccm"},{id:2,label:"Recreation"},{id:3,label:"Turistic"},{id:4,label:"Turistic +"},{id:5,label:"Dynamic"}]
+import {addUser,getParticipants} from "./TripDetailsService"
 
 const people = [
     {id:"1",firstName:"Admin",lastName:"admin",email:"a@a.pl",isActive:true,isAdmin:true},
@@ -13,11 +12,16 @@ const people = [
     ]
 
 const TripDetails = ({trip}) => {
-        const[participants,setParticipants] = useState(people)
+        const[participants,setParticipants] = useState([])
     
         const handleAddMe = () => {
-            console.log("add")
+            addUser(trip?.id).then(()=>getParticipants(trip?.id).then(setParticipants))
         }
+        
+        useEffect(() => {  
+            if(trip)
+                getParticipants(trip?.id).then(setParticipants)
+         },[trip]);
 
 
       return (
@@ -29,10 +33,10 @@ const TripDetails = ({trip}) => {
             <p>{trip?.description}</p>
 
             <p className="has-text-weight-bold mt-2 mb-2 is-size-4">Begin date:</p>
-            <p>{trip?.fromDate}</p>
+            <p>{moment(trip?.fromDate).format("YYYY-MM-DD HH:mm")}</p>
 
             <p className="has-text-weight-bold mt-2 mb-2 is-size-4">Finish date:</p>
-            <p>{trip?.toDate}</p>
+            <p>{moment(trip?.toDate).format("YYYY-MM-DD HH:mm")}</p>
 
 
             <p className="has-text-weight-bold mt-2 mb-2 is-size-4">From:</p>
@@ -42,7 +46,7 @@ const TripDetails = ({trip}) => {
             <p>{trip?.toPlace}</p>
 
             <p className="has-text-weight-bold mt-2 mb-2 is-size-4">Speed:</p>
-            <p>{trip? speedOptions[trip.speed.id].label:""}</p>
+            <p>{trip? trip.speed:""}</p>
 
             <ParticipantList participants={participants}/>
 
