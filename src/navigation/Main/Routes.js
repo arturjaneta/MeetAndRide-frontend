@@ -6,6 +6,7 @@ import FindTripPage from "../../pages/FindTripPage/FindTripPage"
 import MyTripsPage from "../../pages/MyTripsPage/MyTripsPage"
 import TripDetailsPage from "../../pages/TripDetailsPage/TripDetailsPage";
 import AddTripPage from "../../pages/AddTripPage/AddTripPage";
+import EditTripPage from "../../pages/EditTripPage/EditTripPage";
 
 
 
@@ -25,6 +26,8 @@ const Routes = () => {
         <Account></Account>
       </Route>
       <Route path="/details/:id" component={TripDetailsPage}>
+      </Route>
+      <Route path="/edit/:id" component={EditTripPage}>
       </Route>
       <Route path="/add" >
         <AddTripPage></AddTripPage>

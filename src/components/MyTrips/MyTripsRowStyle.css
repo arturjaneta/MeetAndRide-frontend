@@ -1,0 +1,8 @@
+.row:hover{
+  background-color:  hsl(217, 71%, 53%) !important;
+  color: white;
+  cursor: pointer;
+}
+label{
+  cursor: pointer;
+}

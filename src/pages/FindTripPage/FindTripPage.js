@@ -5,10 +5,10 @@ import {getTrips} from "./FindTripService";
 import FilterBar from "./FilterBar";
 
 
-const date = [{id:1,label:"Today"},{id:2,label:"Tomorrow"},{id:3,label:"Next 7 days"},{id:4,label:"Next 30 days"},{id:5,label:"Later than 30 days"}]
+const date = [{id:1,label:"Today",value:1},{id:2,label:"Tomorrow",value:2},{id:3,label:"Next 7 days",value:7},{id:4,label:"Next 30 days",value:30},{id:5,label:"Later than 30 days",value:0}]
 const location = [{id:1,label:"5 km",value:5000},{id:2,label:"10 km",value:10000},{id:3,label:"25 km",value:25000},{id:4,label:"50 km",value:50000},{id:5,label:"More than 50 km",value:0}]
-const speed = [{id:1,label:"125ccm"},{id:2,label:"Recreation"},{id:3,label:"Turistic"},{id:4,label:"Turistic +"},{id:5,label:"Dynamic"}]
-const tags = [{id:1,label:"No highways"},{id:2,label:"Offroad"},{id:3,label:"Touring"},{id:4,label:"Just riding"}]
+const speed = [{id:1,label:"SLOW"},{id:2,label:"NORMAL"},{id:3,label:"FAST"},{id:4,label:"VERY_FAST"},{id:5,label:"NO_LIMIT"}]
+const tags = [{id:1,label:"NO_HIGHWAYS"},{id:2,label:"OFFROAD"},{id:3,label:"TOURING"},{id:4,label:"JUST_RIDING"}]
 
 const definedTrips = [
 {id:1,title:"Test ride",description:"Description of test ride",fromDate:"2020-11-08 18:00",toDate:"2020-11-08 20:00",fromPlace:"Mycity",toPlace:"City2",trace:"",speed:1,ownerId:1},
@@ -18,21 +18,29 @@ const definedTrips = [
 
 const FindTripPage = () => {
   const [trips, setTrips] = useState([]);
-  const [selectedDate, setSelectedDate] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedSpeed, setSelectedSpeed] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
+  const [position, setPosition] = useState(null)
 
   useEffect(() => {   
     const body = {
-      date:selectedDate,
-      range:selectedLocation,
-      speed:selectedSpeed,
-      tags:selectedTags
+      date:selectedDate?selectedDate.value:null,
+      range:selectedLocation?selectedLocation.value:null,
+      location:selectedLocation?position:null,
+      speed:selectedSpeed.length===0?null:selectedSpeed.map(speed=>speed.id),
+      tags:selectedTags.length===0?null:selectedTags.map(tag=>tag.id)
     }
     console.log(body)
-    getTrips("null","null","null","null").then(setTrips)
- },[]);
+    getTrips(body
+      // selectedDate?selectedDate.value:null,
+      // selectedLocation?selectedLocation.value:null,
+      // selectedLocation?position:null,
+      // selectedSpeed.length===0?null:selectedSpeed.map(speed=>speed.id),
+      // selectedTags.length===0?null:selectedTags.map(tag=>tag.id)
+      ).then(setTrips)
+ },[selectedDate,selectedLocation,selectedSpeed,selectedTags]);
 
   const handelDateSelect = (selected) => {
     setSelectedDate(selected)
@@ -45,10 +53,12 @@ const FindTripPage = () => {
   }
 
   const handelSpeedSelect = (selected) => {
+    setSelectedSpeed(selected?selected:[])
     console.log(selected)
   }
 
   const handelTagsSelect = (selected) => {
+    setSelectedTags(selected?selected:[])
     console.log(selected)
   }
 
@@ -70,6 +80,8 @@ const FindTripPage = () => {
             selectedLocation={selectedLocation}
             selectedSpeed={selectedSpeed}
             selectedTags={selectedTags}
+            position={position}
+            setPosition={setPosition}
             />
             <FindTripTable trips={trips}/>
             </div>

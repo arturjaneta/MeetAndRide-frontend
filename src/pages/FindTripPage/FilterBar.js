@@ -41,31 +41,14 @@ const FilterBar = ({date,
   selectedLocation,
   selectedSpeed,
   selectedTags,
+  position,
+  setPosition
   }) => {
     const [bounds, setBounds] = useState({ lat: 50.288656, lng: 18.677925 });
-    const [position, setPosition] = useState(null)
+
 
   return (
     <>
-    {/* <MapContainer
-    center={bounds}
-    zoom={13}
-    scrollWheelZoom={false}>
-    <TileLayer
-      attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-    />
-    {position ?
-    <LayerGroup>
-      <Circle center={position} radius={selectedLocation.value ? selectedLocation.value : 0} />
-    </LayerGroup>
-    :null}
-    <LocationMarker
-    setBounds={setBounds}
-    position={position}
-    setPosition={setPosition}
-    />
-  </MapContainer> */}
   <LeafletMap position={position} setPosition={setPosition} selectedLocation={selectedLocation}/>
       <div className="columns">
         <div className="column is-one-quarter">

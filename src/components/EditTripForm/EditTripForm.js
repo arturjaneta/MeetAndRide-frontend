@@ -1,23 +1,22 @@
 import React, { useState, useEffect, useCallback } from "react";
 import SelectInput from "../common/SelectInput/SelectInput";
-import "./AddTripForm.css"
+import "./EditTripForm.css"
 import moment from "moment";
-import {addTrip} from "./AddTripService"
+import {editTrip} from "./EditTripService"
 import {useHistory} from 'react-router-dom';
 
 const speedOptions = [{id:1,label:"SLOW"},{id:2,label:"NORMAL"},{id:3,label:"FAST"},{id:4,label:"VERY_FAST"},{id:5,label:"NO_LIMIT"}]
 const tagsOptions = [{id:1,label:"NO_HIGHWAYS"},{id:2,label:"OFFROAD"},{id:3,label:"TOURING"},{id:4,label:"JUST_RIDING"}]
 
-
-const AddTripForm = ({trip,routers}) => {
+const EditTripForm = ({trip,routers}) => {
         const [title,setTitle] = useState(trip?trip.title:"");
         const [description,setDescription] = useState(trip?trip.description:"");
         const [beginDate,setBeginDate] = useState(trip?moment(trip.fromDate):moment());
         const [finishDate,setFinishDate] = useState(trip?moment(trip.toDate):moment());
         const [from,setFrom] = useState(trip?trip.fromPlace:"");
         const [to,setTo] = useState(trip?trip.toPlace:"");
-        const [speed,setSpeed] = useState(trip?trip.speed:[]);
-        const [tags,setTags] = useState(trip?trip.tags:[]);
+        const [speed,setSpeed] = useState(trip?speedOptions.find(e=>e.label===trip.speed):[]);
+        const [tags,setTags] = useState(trip?trip.tags.map(tag=>tagsOptions.find(e=>e.label===tag)):[]);
 
         const history = useHistory();
 
@@ -42,6 +41,7 @@ const AddTripForm = ({trip,routers}) => {
         const handleAddTrip = () => {
 
             const body = {
+              id:trip?.id,
               title:title,
               description:description,
               fromDate:beginDate,
@@ -50,15 +50,12 @@ const AddTripForm = ({trip,routers}) => {
               toPlace:to,
               waypoints:routers[1]?.getWaypoints().map(waypoint=>waypoint.latLng),
               speed:speed.id,
+              ownerId:trip.ownerId,
               tags:tags.map(tag=>tag.id)
             }
-          
-            addTrip(body).then(handleOnClick)
 
-            console.log("add")
-            console.log(body)
-            console.log(routers[1]?.getWaypoints())
-            console.log(description)
+            editTrip(body).then(handleOnClick)
+
         }
 
         const handleSpeedSelect = (selected) => {
@@ -157,11 +154,11 @@ const AddTripForm = ({trip,routers}) => {
                 type="submit"
                 onClick={handleAddTrip}
             >
-            Add
+            Edit
             </button>
           </>
         );
 
   }
   
-  export default AddTripForm
+  export default EditTripForm

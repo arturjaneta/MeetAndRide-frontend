@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Page from "../../components/Page/Page";
-import FindTripTable from "../../components/FindTrip/FindTripTable";
+import MyTripsTable from "../../components/MyTrips/MyTripsTable";
 import MyTripsHeader from "./MyTripsHeader"
 import {getMyTrips} from "./MyTripsService"
 
@@ -22,7 +22,7 @@ const MyTripsPage = () => {
       <Page title="My trips">
         <div>
           <MyTripsHeader/>
-          <FindTripTable trips={trips}/>
+          <MyTripsTable trips={trips}/>
           </div>
       </Page>
     </>
