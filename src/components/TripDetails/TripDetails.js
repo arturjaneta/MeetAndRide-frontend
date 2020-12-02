@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import SelectInput from "../common/SelectInput/SelectInput";
 import moment from "moment";
 import ParticipantList from "./ParticipantList"
-import {addUser,getParticipants} from "./TripDetailsService"
+import {addUser,getParticipants,getMotorcycles} from "./TripDetailsService"
 
 const people = [
     {id:"1",firstName:"Admin",lastName:"admin",email:"a@a.pl",isActive:true,isAdmin:true},
@@ -13,6 +13,7 @@ const people = [
 
 const TripDetails = ({trip}) => {
         const[participants,setParticipants] = useState([])
+        const [motorcycles,setMotorcycles] = useState([])
     
         const handleAddMe = () => {
             addUser(trip?.id).then(()=>getParticipants(trip?.id).then(setParticipants))
@@ -21,32 +22,38 @@ const TripDetails = ({trip}) => {
         useEffect(() => {  
             if(trip)
                 getParticipants(trip?.id).then(setParticipants)
+            getMotorcycles(setMotorcycles)
          },[trip]);
 
 
       return (
           <>
-            <p className="has-text-weight-bold mt-2 mb-2 is-size-4">Title:</p>
-            <p>{trip?.title}</p>
+            <p className="has-text-weight-bold mt-3 mb-3 is-size-3">{trip?.title}</p>
 
-            <p className="has-text-weight-bold mt-2 mb-2 is-size-4">Description:</p>
             <p>{trip?.description}</p>
 
-            <p className="has-text-weight-bold mt-2 mb-2 is-size-4">Begin date:</p>
-            <p>{moment(trip?.fromDate).format("YYYY-MM-DD HH:mm")}</p>
-
+            <div className="columns">
+                <div className="column">
+                    <p className="has-text-weight-bold mt-2 mb-2 is-size-4">Begin date:</p>
+                    <p>{moment(trip?.fromDate).format("YYYY-MM-DD HH:mm")}</p>
+                </div>
+                <div className="column">
             <p className="has-text-weight-bold mt-2 mb-2 is-size-4">Finish date:</p>
             <p>{moment(trip?.toDate).format("YYYY-MM-DD HH:mm")}</p>
-
-
+            </div>
+                <div className="column">
             <p className="has-text-weight-bold mt-2 mb-2 is-size-4">From:</p>
             <p>{trip?.fromPlace}</p>
-
+            </div>
+                <div className="column">
             <p className="has-text-weight-bold mt-2 mb-2 is-size-4">To:</p>
             <p>{trip?.toPlace}</p>
-
+            </div>
+                <div className="column">
             <p className="has-text-weight-bold mt-2 mb-2 is-size-4">Speed:</p>
             <p>{trip? trip.speed:""}</p>
+            </div>
+            </div>
 
             <ParticipantList participants={participants}/>
 

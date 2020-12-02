@@ -12,13 +12,23 @@ const tagsOptions = [{id:1,label:"NO_HIGHWAYS"},{id:2,label:"OFFROAD"},{id:3,lab
 const AddTripForm = ({trip,routers}) => {
         const [title,setTitle] = useState(trip?trip.title:"");
         const [description,setDescription] = useState(trip?trip.description:"");
-        const [beginDate,setBeginDate] = useState(trip?moment(trip.fromDate):moment());
-        const [finishDate,setFinishDate] = useState(trip?moment(trip.toDate):moment());
-        const [from,setFrom] = useState(trip?trip.fromPlace:"");
-        const [to,setTo] = useState(trip?trip.toPlace:"");
+        const [beginDate,setBeginDate] = useState(moment());
+        const [finishDate,setFinishDate] = useState(moment());
+        const [from,setFrom] = useState("");
+        const [to,setTo] = useState("");
         const [speed,setSpeed] = useState(trip?trip.speed:[]);
         const [tags,setTags] = useState(trip?trip.tags:[]);
+        const [touched,setTouched] = useState(false);
 
+        const onClickFromTo = () => {
+          if(touched===false){
+            setTouched(true)
+            setFrom(routers[1]?.getWaypoints()[0].name)
+            setTo(routers[1]?.getWaypoints()[1].name)
+          }
+        };
+        
+    
         const history = useHistory();
 
         const handleOnClick = useCallback(() => history.push(`/mytrips`), [history]);
@@ -40,7 +50,18 @@ const AddTripForm = ({trip,routers}) => {
         };
 
         const handleAddTrip = () => {
-
+          console.log(routers[1]?.getWaypoints())
+          if(routers[1]?.getWaypoints()[1].latLng===null||routers[1]?.getWaypoints()[0].latLng===null){
+            alert("You have to add minimum 2 waypoints!")
+          }else if(title===""){
+            alert("Title cannot be empty!")
+          }else if(speed===null||speed.length===0){
+            alert("Speed cannot be empty!")
+          }else if(from===""){
+            alert("From cannot be empty!")
+          }else if(to===""){
+            alert("To cannot be empty!")
+          }else{
             const body = {
               title:title,
               description:description,
@@ -54,11 +75,7 @@ const AddTripForm = ({trip,routers}) => {
             }
           
             addTrip(body).then(handleOnClick)
-
-            console.log("add")
-            console.log(body)
-            console.log(routers[1]?.getWaypoints())
-            console.log(description)
+          }
         }
 
         const handleSpeedSelect = (selected) => {
@@ -70,17 +87,58 @@ const AddTripForm = ({trip,routers}) => {
       }
 
         const handleBeginDateChange = (event) => {
-            setBeginDate(moment(event.target.value, "YYYY-MM-DDTHH:mm"));
-            if (moment(event.target.value, "YYYY-MM-DDTHH:mm").isAfter(finishDate)) 
-              setFinishDate(moment(event.target.value, "YYYY-MM-DDTHH:mm"))
+          if(event.target.value===""){
+            setBeginDate(moment())
+            if (moment().isAfter(finishDate)) 
+                setFinishDate(moment())
+          }
+          else{
+            const newDate = event.target.value + " " + beginDate.hour() + ":" + beginDate.minute();
+            const date = moment(newDate, "YYYY-MM-DD HH:mm")
+            setBeginDate(date);
+            if (date.isAfter(finishDate)) 
+                setFinishDate(date)
+            console.log(newDate)
+          }
+          };
+
+          const handleBeginTimeChange = (event) => {
             console.log(event.target.value)
+            const value = event.target.value===""?"00:00":event.target.value
+            const time = moment(value, "HH:mm")
+            const newDate = beginDate?.hour(time.hour()).minute(time.minute())
+            const date = moment(newDate)
+            setBeginDate(date);
+            if (date.isAfter(finishDate)) 
+                setFinishDate(date)
+            console.log(date)
           };
 
           const handleFinishDateChange = (event) => {
-            setFinishDate(moment(event.target.value, "YYYY-MM-DDTHH:mm"));
-            if (moment(event.target.value, "YYYY-MM-DDTHH:mm").isBefore(beginDate)) 
-              setBeginDate(moment(event.target.value, "YYYY-MM-DDTHH:mm"))
-            console.log(event.target.value)
+            if(event.target.value===""){
+              setFinishDate(moment())
+              if (moment().isBefore(beginDate)) 
+                setBeginDate(moment())
+            }
+            else{
+            const newDate = event.target.value + " " + finishDate.hour() + ":" + finishDate.minute();
+            const date = moment(newDate, "YYYY-MM-DD HH:mm")
+            setFinishDate(date);
+            if (date.isBefore(beginDate)) 
+                setBeginDate(date)
+            console.log(date)
+            }
+          };
+
+          const handleFinishTimeChange = (event) => {
+            const value = event.target.value===""?"00:00":event.target.value
+            const time = moment(value, "HH:mm")
+            const newDate = finishDate?.hour(time.hour()).minute(time.minute())
+            const date = moment(newDate)
+            setFinishDate(date);
+            if (date.isBefore(beginDate)) 
+                setBeginDate(date)
+            console.log(date)
           };
 
       return (
@@ -95,40 +153,6 @@ const AddTripForm = ({trip,routers}) => {
 
             <p className="has-text-weight-bold mt-2 mb-2 is-size-4">Description:</p>
             <textarea class="textarea" value={description} onChange={handleDescriptionChange} rows="6"></textarea>
-
-            <p className="has-text-weight-bold mt-2 mb-2 is-size-4">Begin date:</p>
-            <input
-            className="input"
-            type="datetime-local"
-            value={beginDate?.format("YYYY-MM-DDTHH:mm")}
-            onChange={handleBeginDateChange}
-          />
-
-            <p className="has-text-weight-bold mt-2 mb-2 is-size-4">Finish date:</p>
-            <input
-            className="input"
-            type="datetime-local"
-            value={finishDate?.format("YYYY-MM-DDTHH:mm")}
-            onChange={handleFinishDateChange}
-            required
-            />
-
-
-            <p className="has-text-weight-bold mt-2 mb-2 is-size-4">From:</p>
-            <input
-            type="text"
-            className="input text-input"
-            value={from}
-            onChange={handleFromChange}
-            />
-
-            <p className="has-text-weight-bold mt-2 mb-2 is-size-4">To:</p>
-            <input
-            type="text"
-            className="input text-input"
-            value={to}
-            onChange={handleToChange}
-            />
 
             <p className="has-text-weight-bold mt-2 mb-2 is-size-4">Speed:</p>
             <SelectInput
@@ -150,6 +174,44 @@ const AddTripForm = ({trip,routers}) => {
             onChange={(selected) => {
                 handleTagsSelect(selected);
             }}/>
+
+            <p className="has-text-weight-bold mt-2 mb-2 is-size-4">Begin date:</p>
+            <div className="level">
+            <label className="is-size-4 mr-3">Date:</label>
+            <input className="date input is-vcentered" type="date" value={beginDate?.format("YYYY-MM-DD")} onChange={handleBeginDateChange}/>
+            <label className="is-size-4 mr-3 ml-3">Time:</label>
+            <input className="time input text-input is-vcentered" type="time" value={beginDate?.format("HH:mm")} onChange={handleBeginTimeChange}/>
+            </div>
+            
+
+            <p className="has-text-weight-bold mt-2 mb-2 is-size-4">Finish date:</p>
+            <div className="level">
+            <label className="is-size-4 mr-3">Date:</label>
+            <input className="date input is-vcentered" type="date" value={finishDate?.format("YYYY-MM-DD")} onChange={handleFinishDateChange}/>
+            <label className="is-size-4 mr-3 ml-3">Time:</label>
+            <input className="time input text-input is-vcentered" type="time" value={finishDate?.format("HH:mm")} onChange={handleFinishTimeChange}/>
+            </div>
+
+
+            <p className="has-text-weight-bold mt-2 mb-2 is-size-4">From:</p>
+            <input
+            type="text"
+            className="input text-input"
+            value={from}
+            onChange={handleFromChange}
+            onClick={onClickFromTo}
+            />
+
+            <p className="has-text-weight-bold mt-2 mb-2 is-size-4">To:</p>
+            <input
+            type="text"
+            className="input text-input"
+            value={to}
+            onChange={handleToChange}
+            onClick={onClickFromTo}
+            />
+
+            
 
 
             <button

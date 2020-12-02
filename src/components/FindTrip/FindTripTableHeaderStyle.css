@@ -1,15 +1,23 @@
 .column-title {
-  width: 60%;
+  width: 52%;
 }
 
 .column-fromDate {
-  width: 10%;
+  width: 8%;
 }
 
 .column-toDate {
-    width: 10%;
+    width: 8%;
 }
 
 .column-fromPlace {
-    width: 10%;
+    width: 8%;
+  }
+
+  .column-toPlace {
+    width: 8%;
+  }
+
+  .column-speed {
+    width: 8%;
   }

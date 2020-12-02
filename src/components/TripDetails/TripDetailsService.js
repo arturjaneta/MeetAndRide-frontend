@@ -23,3 +23,11 @@ export const addUser = async (id) => {
           console.log(data);
           return data ? data : [];
         };
+
+        export const getMotorcycles = async () => {
+            let res = await axios.get(`${url}/user/getmotorcycles`, {headers: authHeader()})
+                .catch((error) => alert(error.message));
+                let data = res?.data;
+              console.log(data);
+              return data ? data : [];
+            };

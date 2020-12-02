@@ -11,6 +11,8 @@ const MyTripsTableHeader = ({ headers }) => {
       <th className="column-toDate">{headers.toDate.label}</th>
       <th className="column-fromPlace">{headers.fromPlace.label}</th>
       <th className="column-toPlace">{headers.toPlace.label}</th>  
+      <th className="column-speed">{headers.speed.label}</th>
+      <th className="column-tags">{headers.tags.label}</th>
     </tr>
   );
 };

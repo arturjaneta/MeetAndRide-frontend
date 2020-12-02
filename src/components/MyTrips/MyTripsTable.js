@@ -13,6 +13,8 @@ const headers = {
   fromPlace: { label: "From" },
   toPlace: { label: "To" },
   speed: { label: "Speed" },
+  speed: { label: "Speed" },
+  tags: { label: "Tags" },
 };
 
 const MyTripsTable = ({trips}) => {

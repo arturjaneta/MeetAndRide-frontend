@@ -20,8 +20,17 @@ const PeoplePage = () => {
    },[]);
 
   const handleSave = () => {
-    saveUsers(users)
-    console.log(users)
+    let isOk = true
+    users.forEach(user=>{
+      if(user.firstName==="")
+        isOk=false
+        if(user.lastName==="")
+        isOk=false
+    })
+    if(isOk)
+      saveUsers(users)
+    else
+      alert("Names cannot be empty!")
   };
 
   return (

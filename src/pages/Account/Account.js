@@ -56,22 +56,23 @@ function Account() {
       };
    
     const handleChangeName = () =>{
-        if(firstName===""||lastName===""){
+        if(firstName.length===""||lastName===""){
             alert("First name and last name cannot be empty!")
         }else{
-        console.log(firstName)
-        console.log(lastName)
         changeNames(firstName,lastName)
         }
     }
 
     const handleChangePassword = () =>{
+        if(newPassword.length<8){
+            alert("Password is too short(min 8)!")
+        }else{
         if(newPassword===repeatPassword){
-            console.log(newPassword)
             changePassword(newPassword)
         }else{
             alert("Passwords are not same!")
         }
+    }
     }
 
     return (
@@ -106,7 +107,7 @@ function Account() {
             <div>
             <p className="has-text-weight-bold mt-2 mb-2 is-size-4">New password:</p>
             <input
-            type="text"
+            type="password"
             className="input text-input"
             value={newPassword}
             onChange={handleNewPasswordChange}
@@ -114,7 +115,7 @@ function Account() {
 
         <p className="has-text-weight-bold mt-2 mb-2 is-size-4">Repeat password:</p>
             <input
-            type="text"
+            type="password"
             className="input text-input"
             value={repeatPassword}
             onChange={handleRepeatPasswordChange}

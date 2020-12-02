@@ -12,16 +12,20 @@ const TripDetailsPage = (props) => {
   const [routers,setRouters] = useState([])
 
   useEffect(() => {   
-    console.log(props.match.params.id)
-    getTrip(props.match.params.id).then(setTrip)
+      getTrip(props.match.params.id).then((data)=>{
+        setTrip(data)
+        setWaypoints(data.waypoints)
+        console.log(data)
+    })
  },[]);
 
     return (
         <>
           <Page title={"Trip details"}>
+          {waypoints?
               <div id="map">
                 <LeafletMap waypoints={waypoints} setWaypoints={setWaypoints} routers={routers}/>
-                </div>
+                </div>:null}
                 <TripDetalis trip={trip?trip:null}/>
           </Page>
         </>

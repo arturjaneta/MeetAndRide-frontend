@@ -28,6 +28,12 @@ const MyTripsTableRow = ({
       <td className="is-vcentered">
           <label> {trip.toPlace} </label>
       </td>
+      <td className="is-vcentered">
+          <label> {trip.speed} </label>
+      </td>
+      <td className="is-vcentered">
+        {trip.tags?.map(tag=><label> {tag} </label>)}
+      </td>
     </tr>
   );
 };

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Table from "../Table/Table";
 import FindTripTableHeader from "./FindTripTableHeader";
 import FindTripTableRow from "./FindTripTableRow";
-import "moment/locale/pl";
 
 
 const headers = {
@@ -13,6 +12,7 @@ const headers = {
   fromPlace: { label: "From" },
   toPlace: { label: "To" },
   speed: { label: "Speed" },
+  tags: { label: "Tags" },
 };
 
 const FindTripTable = ({trips}) => {

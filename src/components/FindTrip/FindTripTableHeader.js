@@ -10,7 +10,9 @@ const FindTripTableHeader = ({ headers }) => {
       <th className="column-fromDate">{headers.fromDate.label}</th>
       <th className="column-toDate">{headers.toDate.label}</th>
       <th className="column-fromPlace">{headers.fromPlace.label}</th>
-      <th className="column-toPlace">{headers.toPlace.label}</th>  
+      <th className="column-toPlace">{headers.toPlace.label}</th>
+      <th className="column-speed">{headers.speed.label}</th>
+      <th className="column-tags">{headers.tags.label}</th>
     </tr>
   );
 };
