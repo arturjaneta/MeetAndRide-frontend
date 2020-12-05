@@ -1,19 +1,23 @@
 .column-brandName {
-  width: 20%;
+  width: 16%;
 }
 
 .column-modelName {
-  width: 20%;
+  width: 16%;
 }
 
 .column-power {
-  width: 20%;
+  width: 16%;
 }
 
 .column-capacity {
-  width: 20%;
+  width: 16%;
 }
 
 .column-registrationNumber {
-  width: 20%;
+  width: 16%;
+}
+
+.column-year {
+  width: 16%;
 }

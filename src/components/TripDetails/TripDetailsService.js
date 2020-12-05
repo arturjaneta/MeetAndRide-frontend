@@ -3,18 +3,28 @@ import {authHeader} from '../../components/Auth/AuthHeader'
 
 const url = `http://localhost:8080`;
 
-export const addUser = async (id) => {
+export const addUser = async (id,motorcycleId) => {
     await axios.patch(`${url}/trip`,{
     }, {headers: authHeader(), params:
     {
-        id:id
+        id:id,
+        motorcycleId:motorcycleId
     }})
         .catch((error) => alert(error.message));
     };
 
+    export const removeUser = async (id) => {
+        await axios.patch(`${url}/trip/remove`,{
+        }, {headers: authHeader(), params:
+        {
+            id:id
+        }})
+            .catch((error) => alert(error.message));
+        };
+
 
     export const getParticipants = async (id) => {
-        let res = await axios.get(`${url}/user/getall/trip`, {headers: authHeader(), params:
+        let res = await axios.get(`${url}/trip/participants`, {headers: authHeader(), params:
             {
                 id:id
             }})

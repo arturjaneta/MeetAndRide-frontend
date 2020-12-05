@@ -21,3 +21,8 @@ export const changePassword = async (password) => {
     }})
         .catch((error) => alert(error.message));
     };
+
+    export const addMotorcycle = async (body) => {
+        await axios.post(`${url}/user/addmotorcycle`,body,{headers: authHeader()})
+            .catch((error) => alert(error.message));
+        };

@@ -20,7 +20,7 @@ const MotorcyclesTable = ({motorcycles}) => {
         ...motorcycles.map((motorcycle) => (
           <MotorcyclesTableRow
             key={motorcycle.id}
-            user={motorcycle}
+            motorcycle={motorcycle}
           />
         )),
       ]}

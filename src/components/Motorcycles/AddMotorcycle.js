@@ -1,12 +1,13 @@
 import "./MotorcyclesTableHeader.style.css";
 import React, { useState, useEffect } from "react";
 
-const AddMotorcycle = ({setBrand,setModel,setPwr,setCapacit,setRegistration}) => {
+const AddMotorcycle = ({setBrand,setModel,setPwr,setCapacit,setRegistration,setYear}) => {
     const [brandName,setBrandName] = useState("")
     const [modelName,setModelName] = useState("")
     const [Power,setPower] = useState("")
     const [Capacity,setCapacity] = useState("")
     const [registrationNumber,setRegistrationNumber] = useState("")
+    const [ProdYear,setProdYear] = useState("")
 
     const handleBrandNameChange = (event) => {
         setBrand(event.target.value)
@@ -33,6 +34,11 @@ const AddMotorcycle = ({setBrand,setModel,setPwr,setCapacit,setRegistration}) =>
         setRegistrationNumber(event.target.value)
       };
 
+      const handleYearChange = (event) => {
+        setYear(event.target.value)
+        setProdYear(event.target.value)
+      };
+
   return (
     <tr className="is-capitalized">
       <th className="column-brandName">
@@ -50,22 +56,31 @@ const AddMotorcycle = ({setBrand,setModel,setPwr,setCapacit,setRegistration}) =>
             onChange={handleModelNameChange}
           /></th>
       <th className="column-power"><input
-            type="text"
+            type="number"
             className="input text-input"
             value={Power}
             onChange={handlePowerChange}
+            min="1"
           /></th>
       <th className="column-capacity"><input
-            type="text"
+            type="number"
             className="input text-input"
             value={Capacity}
             onChange={handleCapacityChange}
+            min="1"
           /></th>
       <th className="column-registrationNumber"><input
             type="text"
             className="input text-input"
             value={registrationNumber}
             onChange={handleRegistrationNumberChange}
+          /></th>
+          <th className="column-year"><input
+            type="number"
+            className="input text-input"
+            value={ProdYear}
+            onChange={handleYearChange}
+            min="1900"
           /></th>
     </tr>
   );

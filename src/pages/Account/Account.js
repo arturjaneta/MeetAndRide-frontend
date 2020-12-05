@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 
 import Page from '../../components/Page/Page';
 
-import {changeNames,changePassword} from "./AccountService"
+import {changeNames,changePassword,addMotorcycle} from "./AccountService"
 
 
 import * as services from '../../components/common/AxiosService';
@@ -14,6 +14,7 @@ import MotorcyclesTable from "../../components/Motorcycles/MotorcyclesTable"
 import AddMotorcycle from "../../components/Motorcycles/AddMotorcycle"
 import AddTripPage from '../AddTripPage/AddTripPage';
 import Table from "../../components/Table/Table";
+import {getMotorcycles} from "../../components/TripDetails/TripDetailsService"
 
 function Account() {
     
@@ -30,13 +31,24 @@ function Account() {
     const [Power,setPower] = useState("")
     const [Capacity,setCapacity] = useState("")
     const [registrationNumber,setRegistrationNumber] = useState("")
+    const [year,setYear] = useState("")
+
+
+    useEffect(() => {  
+        getMotorcycles().then(setMotorcycles)
+     },[]);
 
     const handleAddMotorcycle = () => {
-        console.log(brandName)
-        console.log(modelName)
-        console.log(Power)
-        console.log(Capacity)
-        console.log(registrationNumber)
+        const body = {
+            brandName:brandName,
+            modelName:modelName,
+            year:year,
+            power:Power,
+            capacity:Capacity,
+            registrationNumber:registrationNumber,
+        }
+        addMotorcycle(body).then(()=>getMotorcycles().then(setMotorcycles))
+
     }
     const handleFirstNameChange = (event) => {
         setFirstName(event.target.value)
@@ -130,7 +142,7 @@ function Account() {
             </button>
             </div>
 
-            {/* <h1 className="title is-2 is-capitalized has-text-weight-bold mt-6">
+            <h1 className="title is-2 is-capitalized has-text-weight-bold mt-6">
                 Your motorcycles
             </h1>
             
@@ -149,6 +161,7 @@ function Account() {
         setPwr={setPower}
         setCapacit={setCapacity}
         setRegistration={setRegistrationNumber}
+        setYear={setYear}
         />}
         body={[]}
         />
@@ -157,7 +170,7 @@ function Account() {
         onClick={handleAddMotorcycle}
       >
         Add
-      </button> */}
+      </button>
 
         </Page>
     );

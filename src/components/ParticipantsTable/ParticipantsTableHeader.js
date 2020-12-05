@@ -1,9 +1,11 @@
 import React from "react";
-import "./MotorcyclesTableHeader.style.css";
+import "./ParticipantsTableHeader.style.css";
 
-const MotorcyclesTableHeader = ({ headers }) => {
+const ParticipantsTableHeader = ({ headers }) => {
   return (
     <tr className="is-capitalized">
+      <th className="column-firstName">{headers.firstName.label}</th>
+      <th className="column-lastName">{headers.lastName.label}</th>
       <th className="column-brandName">{headers.brandName.label}</th>
       <th className="column-modelName">{headers.modelName.label}</th>
       <th className="column-power">{headers.power.label}</th>
@@ -14,4 +16,4 @@ const MotorcyclesTableHeader = ({ headers }) => {
   );
 };
 
-export default MotorcyclesTableHeader;
+export default ParticipantsTableHeader;
